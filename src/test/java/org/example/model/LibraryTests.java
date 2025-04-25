@@ -15,8 +15,8 @@ public class LibraryTests {
                 "Biblioteca Tierno Galvan",
                 Map.of(
                         "1", new Book(
-                                "1", "el Padrino", "Alguien", Set.of("Novela", "Miedo"),
-                        )
+                                "1", "el Padrino", "Alguien", List.of("Novela", "Miedo"))
+
                 ),
                 Map.of(
 
