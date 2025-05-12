@@ -1,6 +1,6 @@
 package org.ies.library.model;
 
-import jdk.dynalink.linker.LinkerServices;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,5 +12,6 @@ public class Book {
     private String isbn;
     private String title;
     private String author;
-    private List<String> genres;
+    private List<String > genres;
+
 }
