@@ -4,6 +4,7 @@ package org.ies.library.components;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.ies.library.exceptions.BookNotFoundException;
+import org.ies.library.exceptions.MemberNotFoundException;
 import org.ies.library.model.Library;
 
 import java.util.InputMismatchException;
@@ -44,9 +45,21 @@ public class LibraryApp {
             }else if (option == 4){
                 try {
                     log.info("Introduce el nif para buscar al socio: ");
+                    String nif = scanner.nextLine();
+
+                    log.info("Intorduce el ISBN: ");
+                    String isbn = scanner.nextLine();
+
+                    var loan = library.memberMakesLoan(nif, isbn);
+                    log.info(loan);
+
+                }catch (MemberNotFoundException | BookNotFoundException e){
+                    log.error(e.getMessage());
                 }
+            }else{
+                log.info("Saliendo....");
             }
-        }
+        }while (option != 5);
 
     }
 

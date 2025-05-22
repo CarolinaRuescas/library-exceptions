@@ -57,19 +57,16 @@ public class Library {
     // el socio ha tomado prestado un libro. Si no existe el socio MemberNotFoundException(nif)
     // y si no existe el libro BookNotFoundException(isbn)
 
-    public boolean memberMakesLoan (String nif, String isbn) throws BookNotFoundException, MemberNotFoundException{
-        var member = foundMemberByNif(nif);
-        var book = foundBookByIsbn(isbn);
+    public boolean memberMakesLoan (String isbn, String nif) throws BookNotFoundException, MemberNotFoundException{
+        foundBookByIsbn(isbn);
+        foundMemberByNif(nif);
 
-        if(member != null){
-            if(book != null){
+        for (var booklend : bookLendsHistory){
+            if (booklend.getIsbn().equals(isbn) && booklend.getNifPartner().equals(nif)){
                 return true;
             }
-        }else{
-            throw new MemberNotFoundException(nif);
         }
         return false;
-
     }
 
 
