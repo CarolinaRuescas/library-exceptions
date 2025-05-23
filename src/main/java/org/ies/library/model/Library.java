@@ -36,7 +36,7 @@ public class Library {
 
     // metodo que dado un ISBN devulve el libro. Si no existe el libro se lanza la excepcion
     // BookNotFOundException(isbn)
-    public Book foundBookByIsbn (String isbn) throws BookNotFoundException{
+    public Book findBookByIsbn(String isbn) throws BookNotFoundException{
         if (bookByIsbn.containsKey(isbn)){
             return bookByIsbn.get(isbn);
         }else{
@@ -45,7 +45,7 @@ public class Library {
     }
 
     // Dado un nif, devuelve el socio. Si no existe MemberNotFoundException(nif)
-    public Member foundMemberByNif (String nif) throws MemberNotFoundException{
+    public Member findMemberByNif(String nif) throws MemberNotFoundException{
         if(memberByNif.containsKey(nif)){
             return memberByNif.get(nif);
         }else{
@@ -58,8 +58,8 @@ public class Library {
     // y si no existe el libro BookNotFoundException(isbn)
 
     public boolean memberMakesLoan (String isbn, String nif) throws BookNotFoundException, MemberNotFoundException{
-        foundBookByIsbn(isbn);
-        foundMemberByNif(nif);
+        findBookByIsbn(isbn);
+        findMemberByNif(nif);
 
         for (var booklend : bookLendsHistory){
             if (booklend.getIsbn().equals(isbn) && booklend.getNifPartner().equals(nif)){

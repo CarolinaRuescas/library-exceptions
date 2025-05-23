@@ -1,29 +1,31 @@
 package org.ies.library.components;
 
 
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.ies.library.exceptions.BookNotFoundException;
 import org.ies.library.exceptions.MemberNotFoundException;
+import org.ies.library.model.Book;
+import org.ies.library.model.BookLend;
 import org.ies.library.model.Library;
+import org.ies.library.model.Member;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 
 
 @Log4j
 
 public class LibraryApp {
     private final Scanner scanner;
-    private final Library library;
 
-    public LibraryApp(Scanner scanner, Library library) {
+
+    public LibraryApp(Scanner scanner) {
         this.scanner = scanner;
-        this.library = library;
     }
 
 
     public void run(){
+        var library = createTestsLibrary();
         int option;
         do{
             option = chooseOption();
@@ -37,7 +39,7 @@ public class LibraryApp {
                     log.info("Introduce el ISBN de libro que quieres buscar: ");
                     String isbn = scanner.nextLine();
 
-                    var book = library.foundBookByIsbn(isbn);
+                    var book = library.findBookByIsbn(isbn);
                     log.info(book);
                 }catch (BookNotFoundException e){
                     log.error(e.getMessage());
@@ -85,6 +87,29 @@ public class LibraryApp {
         }while (option != 1 && option != 2 && option != 3 && option != 4);
 
         return option;
+    }
+
+    private Library createTestsLibrary(){
+
+        Map<String, Book> bookByIsbn = Map.of(
+                "533", new Book("533", "Busqueda", "Adrian", List.of(
+                        "Miedo", "Romance")
+                )
+        );
+        Map<String, Member> memberByNif = Map.of(
+                "4x", new Member("4x", "Carolina", "Ruescas", 1, 28943),
+                "5x", new Member("5x", "Yolanda", "Perez", 2, 28944)
+        );
+
+        TreeSet<BookLend> bookLendsHistory = new TreeSet<>();
+        bookLendsHistory.add(new BookLend("100", LocalDate.now(), "4x", LocalDate.now()));
+
+        return new Library(
+                "Pepita Pérez",
+                bookByIsbn,
+                memberByNif,
+                bookLendsHistory
+        );
     }
 
 
